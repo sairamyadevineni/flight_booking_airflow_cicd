@@ -24,8 +24,8 @@ with DAG(
 
     # Fetch environment variables
     env = Variable.get("env", default_var="dev")
-    gcs_bucket = Variable.get("gcs_bucket", default_var="airflow-projetcs-gds")
-    bq_project = Variable.get("bq_project", default_var="psyched-service-442305-q1")
+    gcs_bucket = Variable.get("gcs_bucket", default_var="us-central1-airflow-test-601a03c4-bucket")
+    bq_project = Variable.get("bq_project", default_var="vivid-env-448816-c5")
     bq_dataset = Variable.get("bq_dataset", default_var=f"flight_data_{env}")
     tables = Variable.get("tables", deserialize_json=True)
 
@@ -41,7 +41,7 @@ with DAG(
     file_sensor = GCSObjectExistenceSensor(
         task_id="check_file_arrival",
         bucket=gcs_bucket,
-        object=f"/source-{env}/flight_booking.csv",  # Full file path in GCS
+        object=f"source-{env}/flight_booking.csv",  # Full file path in GCS
         google_cloud_conn_id="google_cloud_default",  # GCP connection
         timeout=300,  # Timeout in seconds
         poke_interval=30,  # Time between checks
